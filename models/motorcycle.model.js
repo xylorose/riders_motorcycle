@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
 // riderId
 let MotorcycleSchema = new Schema({
     manufacturer :{type: String , required: true},
-    displacement:{type: Number, required: true},
+    displacement:{type: String, required: true},
     weight:{type: Number, required: true},
     riderId:{type: String, required: false}
 })

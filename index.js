@@ -155,13 +155,30 @@ app.get('/motorcycles/fetch',(req,res)=>{
 app.get('/motorcycles/fetchByRiderId/:rider_Id',(req,res)=>{
     let riderId = req.params.rider_Id
     Motorcycle.find({"riderId":riderId},(err,motorcycles)=>{
+        if(err){
+            json.send(err)
+        }
         res.json(motorcycles)
     })
 })
 
 
 // BONUS 10 - Create a HTTP Request to to get the riders ranking
+app.get('/riders/rankingRiders',(req,res)=>{
+    let rank = []
+    Rider.find({},(err,riders)=>{
+    riders.forEach(rider=>{  
+        rank.push({
+            "rider":rider,
+            "totalScore":rider.score.reduce((a, b) => a + b , 0)
+        })
+       // console.log(rider.score.reduce((a, b) => a + b, 0));  
+    })
+    res.json({riderRanks:(rank.sort((a,b) => (a.totalScore > b.totalScore) ? 1 : ((b.totalScore> a.totalScore) ? -1 : 0))).reverse()});
+    })
+})
 
+//I didn't do the last item miss..Kuya Danilo made it and he have a hard time..If you want to know the explanation please call him..thank youand sorry, I ask his help because I have a hard time.
 
 //
 // End of the exercise
